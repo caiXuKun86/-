@@ -1,0 +1,18 @@
+```java
+    public boolean is(long num){
+        long offset=1;
+        while(num/offset>=10){
+            offset*=10;
+        }
+        while(num!=0){
+            if(num%10!=num/offset){
+                return false;
+            }
+            num=(num%offset)/10;
+            offset/=100;
+        }
+        return true;
+        
+    }
+```
+

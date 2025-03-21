@@ -1,0 +1,20 @@
+```c++
+int father[1005];
+
+
+int find(int x){
+	if(x!=father[x]){
+		father[x]=find(father[x]);
+	}
+	return father[x];
+}
+
+bool issame(int x,int y){
+	return find(x)==find(y);
+}
+
+void uset(int x,int y){
+	father[find(x)]=find(y);
+}
+```
+

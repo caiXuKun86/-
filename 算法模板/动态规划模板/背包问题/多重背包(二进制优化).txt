@@ -1,0 +1,47 @@
+#include<iostream>
+using namespace std;
+#include<cstring>
+
+const int N=15000;
+const int V=2010;
+
+
+int dp[V];
+
+int weight[N];
+int volume[N];
+int n,v;
+
+int main(){
+	int count=0;
+	cin>>n>>v;
+	for(int i=1,s,vol,wei;i<=n;i++){
+		int k=1;
+		cin>>vol>>wei>>s;
+		while(s>=k){
+			count++;
+			volume[count]=k*vol;
+			weight[count]=k*wei;
+			s-=k;
+			k*=2;
+				
+		}
+		if(s>0){
+			count++;
+			volume[count]=s*vol;
+			weight[count]=s*wei;
+		}
+		
+	}
+	n=count;
+	
+    for(int i=1;i<=n;i++){
+    	for(int j=v;j>=0;j--){
+    		if(j-volume[i]>=0){
+    			dp[j]=max(dp[j],dp[j-volume[i]]+weight[i]);
+			}
+		}
+	}
+	cout<<dp[v];
+	return 0;
+}

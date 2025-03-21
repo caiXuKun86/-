@@ -1,0 +1,68 @@
+```
+#include<iostream>
+using namespace std;
+#define ll long long
+int n,q;
+ll a[100005];
+
+ll sum[400005]={0};
+int add[400005]={0};
+
+void up(int i){
+	sum[i]=sum[i<<1]+sum[i<<1|1];
+}
+void lazy(int i,int v,int len){
+	sum[i]+=1ll*v*len;
+	add[i]+=v;
+}
+
+void down(int i,int ln,int rn){
+	if(add[i]!=0){
+		lazy(i<<1,add[i],ln);
+		lazy(i<<1|1,add[i],rn);
+		add[i]=0;
+	}
+}
+void build(int l,int r,int i){
+	if(l==r){
+		sum[i]=a[l];
+		return;
+	}
+	int m=(l+r)>>1;
+	build(l,m,i<<1);
+	build(m+1,r,i<<1|1);
+	up(i);
+}
+
+ll query(int tl,int tr,int l,int r,int i){
+	if(l>=tl&&r<=tr){
+		return sum[i];
+	}
+	int m=(l+r)>>1;
+	down(i,m-l+1,r-m);
+	ll ans=0;
+	if(tl<=m){
+		ans+=query(tl,tr,l,m,i<<1);
+	}
+	if(tr>m){
+		ans+=query(tl,tr,m+1,r,i<<1|1);
+	}
+	return ans;
+}
+void ad(int tl,int tr,int v,int l,int r,int i){
+	if(tl<=l&&r<= tr){
+		lazy(i,v,r-l+1);
+	} else{
+		int m=(l+r)>>1;
+		down(i,m-l+1,r-m);
+		if(tl<=m){
+			ad(tl,tr,v,l,m,i<<1);
+		}
+		if(tr>m){
+			ad(tl,tr,v,m+1,r,i<<1|1);
+		}
+		up(i);
+	}
+}
+```
+

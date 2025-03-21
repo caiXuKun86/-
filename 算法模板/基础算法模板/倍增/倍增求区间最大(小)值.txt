@@ -1,0 +1,38 @@
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int n,q;
+int a[50005];
+int lg[50005];
+int maxst[50005][16];
+int minst[50005][16];
+int main(){
+	cin>>n>>q;
+	for(int i=1;i<=n;i++){
+		cin>>a[i];
+	}
+	
+	lg[0]=-1;
+	for(int i=1;i<=n;i++){
+		lg[i]=lg[i/2]+1;
+		maxst[i][0]=a[i];
+		minst[i][0]=a[i];
+	}
+	for(int p=1;p<=lg[n];p++){
+		for(int i=1;i+(1<<p)-1<=n;i++){
+			maxst[i][p]=max(maxst[i][p-1],maxst[i+(1<<(p-1))][p-1]);
+			minst[i][p]=min(minst[i][p-1],minst[i+(1<<(p-1))][p-1]);
+		}
+	}
+	
+	for(int i=0,l,r;i<q;i++){
+		cin>>l>>r;
+		int p=lg[r-l+1];
+		int maxx=max(maxst[l][p],maxst[r-(1<<p)+1][p]);
+		int minn=min(minst[l][p],minst[r-(1<<p)+1][p]);
+		cout<<maxx-minn<<endl;
+	}
+	return 0;
+}
+```

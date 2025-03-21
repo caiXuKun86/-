@@ -1,0 +1,43 @@
+#include<iostream>
+using namespace std;
+#include<vector>
+vector<int>v={2,1,3,5,4};
+const int n=5;
+
+void selectSort(){
+	for(int i=0;i<n-1;i++){
+		int minIndex=i;
+		for(int j=i+1;j<n;j++){
+			if(v[j]<v[i]) minIndex=j;
+		}
+		swap(v[i],v[minIndex]);
+		
+	}
+}
+
+void bubbleSort(){
+	for(int i=0;i<n-1;i++){
+		for(int j=0;j<n-i-1;j++){
+			
+			if(v[j]>v[j+1]){
+				swap(v[j+1],v[j]);
+			}
+		}
+	}
+}
+void insertSort(){
+	for(int i=1;i<n;i++){
+		for(int j=i-1;j>=0&&v[j]>v[j+1];j--){
+			if(v[j]>v[j+1]){
+				swap(v[j],v[j+1]);
+			}
+			
+		}
+	}
+}
+int main(){
+	insertSort();
+	for(auto i:v){
+		cout<<i<<endl;
+	}
+}
